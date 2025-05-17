@@ -1,23 +1,42 @@
-import { Component } from '@angular/core';
-import { DUMMY_USERS } from './dummy-users';
+import {
+     Component,
+     computed,
+     EventEmitter,
+     Input,
+     input,
+     Output,
+     output,
+} from '@angular/core';
 
-const  radnomIndex = Math.floor(Math.random() * DUMMY_USERS.length)
+// type User = {
+//      id: string;
+//      avatar: string;
+//      name: string;
+// };
+interface User {
+     id: string;
+     avatar: string;
+     name: string;
+}
 @Component({
-  selector: 'app-user',
-  imports: [],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+     selector: 'app-user',
+     imports: [],
+     templateUrl: './user.component.html',
+     styleUrl: './user.component.css',
 })
 export class UserComponent {
-  seledctedUser = DUMMY_USERS[radnomIndex]
+     @Input({ required: true }) user!: User;
+     // @Input ({required:true}) id!:string;
+     // @Input({required :true}) avatar!:string ;
+     // @Input({required :true}) name!:string;
+     @Output() select = new EventEmitter<string>();
+     //select = output<string>() // not signal   used if you want to not used decorator
 
-  get  imagePath (){
-    return 'assets/users/'+ this.seledctedUser.avatar
-  }
+     get imagePath() {
+          return 'assets/users/' + this.user.avatar;
+     }
 
-  onSelectUser( ){
-    const  radnomIndex = Math.floor(Math.random() * DUMMY_USERS.length)
-
-    this.seledctedUser = DUMMY_USERS[radnomIndex]
-  }
+     onSelectUser() {
+          this.select.emit(this.user.id);
+     }
 }
