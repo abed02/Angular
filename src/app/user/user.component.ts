@@ -1,11 +1,8 @@
 import {
      Component,
-     computed,
      EventEmitter,
      Input,
-     input,
      Output,
-     output,
 } from '@angular/core';
 
 // type User = {

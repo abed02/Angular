@@ -11,5 +11,9 @@
                </li>
           }
      </ul>
-     <app-tasks [name]="selectUser?.name"></app-tasks>
+     @if(selectedUserID !== undefined){
+          <app-tasks [name]="selectUser?.name"></app-tasks>
+     }@else {
+          <p>Select user to see their tasks ! </p>
+     }
 </main>
