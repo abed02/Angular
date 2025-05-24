@@ -6,13 +6,14 @@
                <li>
                     <app-user
                          [user]="user"
-                         (select)="onSelectUser($event)"
+                         [selected]="user.id === selectedUserID"
+                         (Select)="onSelectUser($event)"
                     />
                </li>
           }
      </ul>
      @if(selectedUserID !== undefined){
-          <app-tasks [name]="selectUser?.name"></app-tasks>
+          <app-tasks [userid]="selectUser!.id" [name]="selectUser!.name"></app-tasks>
      }@else {
           <p>Select user to see their tasks ! </p>
      }

@@ -4,17 +4,8 @@ import {
      Input,
      Output,
 } from '@angular/core';
+import { User } from './user.model';
 
-// type User = {
-//      id: string;
-//      avatar: string;
-//      name: string;
-// };
-interface User {
-     id: string;
-     avatar: string;
-     name: string;
-}
 @Component({
      selector: 'app-user',
      imports: [],
@@ -23,17 +14,15 @@ interface User {
 })
 export class UserComponent {
      @Input({ required: true }) user!: User;
-     // @Input ({required:true}) id!:string;
-     // @Input({required :true}) avatar!:string ;
-     // @Input({required :true}) name!:string;
-     @Output() select = new EventEmitter<string>();
-     //select = output<string>() // not signal   used if you want to not used decorator
+     @Input({ required: true }) selected!: boolean;
+     @Output() Select = new EventEmitter<string>();
+ 
 
      get imagePath() {
           return 'assets/users/' + this.user.avatar;
      }
 
      onSelectUser() {
-          this.select.emit(this.user.id);
+          this.Select.emit(this.user.id);
      }
 }
