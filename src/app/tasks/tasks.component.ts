@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TaskComponent } from './task/task.component';
-
+import { NewTaskComponent } from "./new-task/new-task.component";
+import {type newTaskData } from './task/task.model';
 @Component({
      selector: 'app-tasks',
-     imports: [TaskComponent],
+     imports: [TaskComponent, NewTaskComponent],
      templateUrl: './tasks.component.html',
      styleUrl: './tasks.component.css',
 })
 export class TasksComponent {
     @Input({required :true }) userid!: string ;
      @Input({required : true}) name!: string ;
+     @Output() newTask = new EventEmitter<string>();
+     isAddingTask =false;
      tasks = [
           {
                id: 't1',
@@ -39,5 +42,22 @@ export class TasksComponent {
      }
      onCompleteTask(id :string){
           this.tasks = this.tasks.filter(t  => t.id !== id)
+     }
+     onStartAddTask(){
+      this.isAddingTask =true ;
+     }
+     onCancelStartNewTask(){
+          this.isAddingTask= false;
+     }
+     onAddTask(taskdata:newTaskData){
+
+          this.tasks.unshift({
+               id:'t4',
+               userId : this.userid,
+               title: taskdata.title,
+               summary: taskdata.summary,
+               dueDate:taskdata.date
+          })
+          this.isAddingTask = false
      }
 }
