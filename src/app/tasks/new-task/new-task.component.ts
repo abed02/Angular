@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output, } from '@angular/core';
+import { Component, EventEmitter, Output,inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { newTaskData } from '../task/task.model';
+import { TaskService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -9,23 +9,25 @@ import { newTaskData } from '../task/task.model';
   styleUrl: './new-task.component.css'
 })
 export class NewTaskComponent {
-  @Output() Cancel  = new EventEmitter<void>(); 
-  @Output() add = new EventEmitter<newTaskData>();
+  @Input ({required:true}) userId!:string 
+  @Output() closee  = new EventEmitter<void>(); 
+  private tasksService = inject(TaskService)
   enterdTitle='';
   enterdSummary='';
   enterdDate ='';
 
  onCancle(){
-  this.Cancel.emit();
+  this.closee.emit();
  }
  onSubmit() {
-     this.add.emit(
+     this.tasksService.addTask(
       {
         title:this.enterdTitle,
         summary:this.enterdSummary,
         date:this.enterdDate,
-      }
+      },this.userId, 
      )
+     this.closee.emit();
  }
  handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Enter' || event.key === ' ') {
